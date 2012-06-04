@@ -24,7 +24,7 @@
 #               the dots).
 #
 
-source ~/code/bash/chpathn/upvars/upvars.bash
+source ~/code/bash/pathname-flib/upvars/upvars.bash
 
 #===  FUNCTION =========================================================
 #

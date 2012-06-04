@@ -1,0 +1,3 @@
+[submodule "upvars"]
+	path = upvars
+	url = git@github.com:mjauquer/bash-upvars.git
