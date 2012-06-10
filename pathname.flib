@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#=======================================================================
-#
 # pathname.flib <Functions that work with Unix like pathnames.>
 # Copyright (C) 2012  Marcelo Javier Auquer
 #
@@ -22,13 +20,10 @@
 #         BUGS: --
 #        NOTES: Any suggestion is welcomed at auq..r@gmail.com (fill in
 #               the dots).
-#
 
 source ~/code/bash/pathname-flib/upvars/upvars.bash
 
 #===  FUNCTION =========================================================
-#
-#        NAME: rm_subtrees
 #
 #       USAGE: rm_subtrees VARNAME PATH...
 #
