@@ -68,11 +68,12 @@ rm_subtrees () {
 	OLD_IFS=$IFS
 	IFS="$(printf '\n\t')"
 	{
-		[[ "$#" -lt 3 ]] && cat <<- EOF
-		Error: function rm_substrees requires three or more \
+		[[ "$#" -lt 2 ]] && cat <<- EOF
+		Error: function rm_substrees requires two or more \
 arguments.
 		EOF
 	} && exit 1
+	[[ "$#" -eq 2 ]] && return 0
 	local varname=$1 && shift 1
 	paths=($@)
 	for (( f=0 ; f < ${#paths[*]}; f++ )); do
