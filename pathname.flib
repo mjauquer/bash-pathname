@@ -81,11 +81,13 @@ arguments.
 		for (( g=f+1 ; g < ${#paths[*]}; g++ )); do
 			[ ! paths[g] ] && continue
 			if [ ${#paths[f]} -le ${#paths[g]} ]; then
+				echo "1- ${paths[f]} ${paths[g]}"
 				if is_ancestor ${paths[f]} ${paths[g]}
 				then
 					unset paths[$g]
 				fi
 			else
+				echo "2- ${paths[f]} ${paths[g]}"
 				if is_ancestor ${paths[g]} ${paths[f]}
 				then
 					unset paths[$f]
