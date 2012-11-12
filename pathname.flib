@@ -23,8 +23,8 @@
 
 source ~/code/bash/pathname-flib/upvars/upvars.bash
 
-#===  FUNCTION =========================================================
-#
+is_ancestor () {
+
 #       USAGE: is_ancestor PATHNAME1 PATHNAME2
 #
 # DESCRIPTION: Consider PATHNAME1 and PATHNAME2 as the root directories
@@ -33,8 +33,7 @@ source ~/code/bash/pathname-flib/upvars/upvars.bash
 #
 #  PARAMETERS: PATHNAME1 (A string representing a unix pathname).
 #              PATHNAME2 (A string representing a unix pathname).
-#
-is_ancestor () {
+
 	OLD_IFS=$IFS
 	IFS="$(printf '\n\t')"
 	{
@@ -48,9 +47,8 @@ is_ancestor () {
 	IFS=$OLD_IFS
 }
 
+rm_subtrees () {
 
-#===  FUNCTION =========================================================
-#
 #       USAGE: rm_subtrees VARNAME PATH...
 #
 # DESCRIPTION: Consider PATH... as a list of unix filesystem pathnames.
@@ -62,9 +60,7 @@ is_ancestor () {
 #                       caller's scope).
 #              PATH... (A list of strings representing unix filesystem
 #                       pathnames).
-#
-#=======================================================================
-rm_subtrees () {
+
 	OLD_IFS=$IFS
 	IFS="$(printf '\n\t')"
 	{
@@ -75,20 +71,21 @@ arguments.
 	} && exit 1
 	[[ "$#" -eq 2 ]] && return 0
 	local varname=$1 && shift 1
-	paths=($@)
-	for (( f=0 ; f < ${#paths[*]}; f++ )); do
-		[ ! paths[f] ] && continue
-		for (( g=f+1 ; g < ${#paths[*]}; g++ )); do
-			[ ! paths[g] ] && continue
+	local -a paths=( $@ )
+	local -i length=${#paths[@]}
+	for (( f=0 ; f < $length; f++ )); do
+		[[ ! -d "${paths[f]}" ]] && continue
+		for (( g=0 ; g < $length; g++ )); do
+			[ ! "${paths[g]}" ] && continue
 			if [ ${#paths[f]} -le ${#paths[g]} ]; then
 				if is_ancestor ${paths[f]} ${paths[g]}
 				then
-					unset paths[$g]
+					unset paths[g]
 				fi
 			else
 				if is_ancestor ${paths[g]} ${paths[f]}
 				then
-					unset paths[$f]
+					unset paths[f]
 				fi
 			fi
 		done
