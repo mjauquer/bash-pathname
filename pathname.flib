@@ -68,28 +68,30 @@ rm_subtrees () {
 		Error: function rm_substrees requires two or more \
 arguments.
 		EOF
-	} && exit 1
-	[[ "$#" -eq 2 ]] && return 0
+	} && return 1
 	local varname=$1 && shift 1
 	local -a paths=( $@ )
 	local -i length=${#paths[@]}
-	for (( f=0 ; f < $length; f++ )); do
-		[[ ! -d "${paths[f]}" ]] && continue
-		for (( g=0 ; g < $length; g++ )); do
-			[ ! "${paths[g]}" ] && continue
-			if [ ${#paths[f]} -le ${#paths[g]} ]; then
-				if is_ancestor ${paths[f]} ${paths[g]}
-				then
-					unset paths[g]
+	if [[ $lenght -gt 1 ]] 
+	then
+		for (( f=0 ; f < $length; f++ )); do
+			[[ ! -d "${paths[f]}" ]] && continue
+			for (( g=0 ; g < $length; g++ )); do
+				[ ! "${paths[g]}" ] && continue
+				if [ ${#paths[f]} -le ${#paths[g]} ]; then
+					if is_ancestor ${paths[f]} ${paths[g]}
+					then
+						unset paths[g]
+					fi
+				else
+					if is_ancestor ${paths[g]} ${paths[f]}
+					then
+						unset paths[f]
+					fi
 				fi
-			else
-				if is_ancestor ${paths[g]} ${paths[f]}
-				then
-					unset paths[f]
-				fi
-			fi
+			done
 		done
-	done
+	fi
 	upvar $varname "${paths[@]}"
 	IFS=$OLD_IFS
 }
