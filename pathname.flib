@@ -21,7 +21,7 @@
 #        NOTES: Any suggestion is welcomed at auq..r@gmail.com (fill in
 #               the dots).
 
-source ~/code/bash/pathname-flib/upvars/upvars.bash
+source $PATHNAME_HOME/upvars/upvars.bash
 
 is_ancestor () {
 
